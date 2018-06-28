@@ -31,18 +31,19 @@ self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
 　1、addSubview
 　
 　　　直接将view通过addSubview方式添加到window中，程序负责维护view的生命周期以及刷新，但是并不会为去理会view对应的ViewController，因此采用这种方法将view添加到window以后，我们还要保持view对应的ViewController的有效性，不能过早释放。
-　```
-　　　self.vc=[[ViewController alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-　　　UIView *view=self.vc.view;
-　　　[self.window addSubview:view];
-　```
+
+```
+　self.vc=[[ViewController alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+ UIView *view=self.vc.view;
+[self.window addSubview:view];
+```
 　
 　　　2、rootViewController
 　　　
-　　　```
+```
 　　　self.vc = [[[AndyViewController alloc] init];
 　　　self.window.rootViewController = self.vc;
-　　　```
+```
 　　　把创建的viewcontrolle付给rootViewController,，UIWindow将会自动将其view添加到当前window中，同时负责ViewController和view的生命周期的维护，防止其过早释放.
 　　　
 
@@ -53,18 +54,17 @@ self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
 　　　UIWindow有三个层级，分别是Normal，StatusBar，Alert，如下所示：
 　　　
 　　　
-　　　　　　　```
+```
 　　　　UIKIT_EXTERN const UIWindowLevel UIWindowLevelNormal; //默认，值为0
 　　　　UIKIT_EXTERN const UIWindowLevel UIWindowLevelAlert; //值为2000
 　　　　UIKIT_EXTERN const UIWindowLevel UIWindowLevelStatusBar ; // 值为1000
-　　　　
-　　　　```
+```
 　　　
 　　　如果想改变UIWindow的层级关系，可以通过一下代码：
 　　　
-　　　　```
+```
 　　　self.window.windowLevel=UIWindowLevelAlert;
-　　　　```
+```
 　　　此时如果显示UIAlertView，我们发现他们会同时突出显示，如果self.window是normal级别，那别只有alertView会突出显示
 　　　
 　　　打印输出他们三个这三个层级的值我们发现从左到右依次是0，1000，2000，也就是说Normal级别是最低的，StatusBar处于中等水平，Alert级别最高。而通常我们的程序的界面都是处于Normal这个级别上的，系统顶部的状态栏应该是处于StatusBar级别，UIActionSheet和UIAlertView这些通常都是用来中断正常流程，提醒用户等操作，因此位于Alert级别。
@@ -72,23 +72,23 @@ self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
 
 　　　　　　
 　　　常用一下四个方法来操作
-　　　　```
+```
 　　　– makeKeyAndVisible
 　　　– becomeKeyWindow
 　　　– makeKeyWindow
 　　　– resignKeyWindow
 　
-　　　　```
+```
 　　　　
 　　　　
 　四个关于window变化的通知
-　　　
-　　　　　　```
+　　　　
+```
 　　UIKIT_EXTERN NSString *const UIWindowDidBecomeVisibleNotification; // 当window激活时并展示在界面的时候触发，返回空
 　　UIKIT_EXTERN NSString *const UIWindowDidBecomeHiddenNotification;  // 当window隐藏的时候触发，暂时没有实际测，返回空
 　　UIKIT_EXTERN NSString *const UIWindowDidBecomeKeyNotification;     // 当window被设置为keyWindow时触发，返回空
 　　UIKIT_EXTERN NSString *const UIWindowDidResignKeyNotification;     // 当window的key位置被取代时触发，返回空
-　　　　　　　```
+```
 　　　　　　　
 程序启动然后点击弹框出来 keywindow的变化
 
